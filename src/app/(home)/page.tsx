@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { Categories } from "./components/categories"
 import { ProductList } from "./components/product-list"
 import { prismaClient } from "@/lib/prisma"
@@ -31,7 +30,7 @@ export default async function Home() {
   })
 
   return (
-    <div>
+    <div className="py-8">
       <PromoBanner
         src="/Banner.png"
         alt="Até 55% de desconto este mês"
