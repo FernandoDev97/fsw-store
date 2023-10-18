@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge"
 import { ShapesIcon } from "lucide-react"
 import { CategoryItem } from "./components/category-item"
 import { prismaClient } from "@/lib/prisma"
+import Link from "next/link"
 
 const CatalogPage = async () => {
 
@@ -13,12 +14,13 @@ const CatalogPage = async () => {
         <ShapesIcon size={16} />
         Catálogo
       </Badge>
-      <div className="grid grid-cols-2 gap-8 mt-auto">
+      <div className="grid grid-cols-2 gap-8">
         {categories.map(category => (
-          <CategoryItem key={category.id} category={category} />
+          <Link key={category.id} href={`/category/${category.slug}`}>
+            <CategoryItem  category={category} />
+          </Link>
         ))}
       </div>
-
     </div>
   )
 }
