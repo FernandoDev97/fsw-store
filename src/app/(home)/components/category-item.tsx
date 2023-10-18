@@ -15,8 +15,7 @@ export const CategoryItem = ({ category }: CategorieItemProps) => {
         speakers: <SpeakerIcon size={16} />,
         mouses: <MouseIcon size={16} />
     }
-
-
+    
     return (
         <Badge variant="outline" className="py-3 flex justify-center items-center gap-2 rounded-lg">
             {categoryIcon[category.slug as keyof typeof categoryIcon]}
