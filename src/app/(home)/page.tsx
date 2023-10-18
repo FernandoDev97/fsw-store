@@ -55,7 +55,7 @@ export default async function Home() {
 
       <div className="mt-8">
         <SectionTitle>
-          Mouses
+          Teclados
         </SectionTitle>
         <ProductList products={keyboards} />
       </div>
@@ -67,7 +67,7 @@ export default async function Home() {
 
       <div className="mt-8">
         <SectionTitle>
-          Fones
+          Mouses
         </SectionTitle>
         <ProductList products={mouses} />
       </div>
