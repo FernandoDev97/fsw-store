@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger } from './sheet'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from './avatar'
 import { Separator } from './separator'
+import Link from 'next/link'
 
 const handleLoginClick = async () => {
   await signIn("google")
@@ -45,10 +46,10 @@ const Header = () => {
                     <AvatarImage src={data.user.image} />
                   )}
                 </Avatar>
-               <div className="flex flex-col">
-               <p className='font-medium'>{data.user.name}</p>
-               <p className='text-sm opacity-75'>Boas compras!</p>
-               </div>
+                <div className="flex flex-col">
+                  <p className='font-medium'>{data.user.name}</p>
+                  <p className='text-sm opacity-75'>Boas compras!</p>
+                </div>
               </div>
               <Separator />
             </div>
@@ -78,10 +79,13 @@ const Header = () => {
               <PercentIcon size={16} />
               Ofertas
             </Button>
-            <Button variant='outline' className='w-full justify-start gap-2'>
-              <ListOrderedIcon size={16} />
-              Catálogo
-            </Button>
+            <Link href='/catalog'>
+              <Button variant='outline' className='w-full justify-start gap-2'>
+                <ListOrderedIcon size={16} />
+                Catálogo
+              </Button>
+            </Link>
+
           </div>
         </SheetContent>
       </Sheet>
