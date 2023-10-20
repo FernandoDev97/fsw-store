@@ -14,6 +14,7 @@ interface ICartContext {
     cartTotalDiscount: number
     addProductsToCart: (product: CartProduct) => void
     changeCartProductQuantity: (productId: string, type: 'increase' | 'decrease') => void
+    removeProductCart: (pruduct: string) => void
 }
 
 interface CartProviderProps {
@@ -61,13 +62,16 @@ const CartProvider = ({ children }: CartProviderProps) => {
         }
     }
 
-
+    function removeProductCart(productId: string) {
+        setProducts(state => state.filter(cartProduct => cartProduct.id !== productId))
+    }
 
     return (
         <CartContext.Provider value={{
             products,
             addProductsToCart,
             changeCartProductQuantity,
+            removeProductCart,
             cartBasePrice: 0,
             cartTotalPrice: 0,
             cartTotalDiscount: 0

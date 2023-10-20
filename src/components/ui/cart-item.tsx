@@ -12,7 +12,7 @@ interface CartItemPros {
 
 export const CartItem = ({ product }: CartItemPros) => {
 
-    const { changeCartProductQuantity } = useContext(CartContext)
+    const { changeCartProductQuantity, removeProductCart } = useContext(CartContext)
 
     function handleIncreaseClick () {
         changeCartProductQuantity(product.id, 'increase')
@@ -20,6 +20,10 @@ export const CartItem = ({ product }: CartItemPros) => {
     
       function handleDecreaseClick () {
         changeCartProductQuantity(product.id, 'decrease')
+      }
+
+      function handleRemoveProductClick () {
+        removeProductCart(product.id)
       }
 
     return (
@@ -58,7 +62,7 @@ export const CartItem = ({ product }: CartItemPros) => {
                     </div>
                 </div>
             </div>
-            <Button size='icon' variant='outline'>
+            <Button onClick={handleRemoveProductClick} size='icon' variant='outline'>
                 <TrashIcon size={16}/>
             </Button>
         </div>
