@@ -13,6 +13,7 @@ interface ICartContext {
     cartBasePrice: number
     cartTotalDiscount: number
     addProductsToCart: (product: CartProduct) => void
+    changeCartProductQuantity: (productId: string, type: 'increase' | 'decrease') => void
 }
 
 interface CartProviderProps {
@@ -20,21 +21,13 @@ interface CartProviderProps {
 
 }
 
-export const CartContext = createContext<ICartContext>({
-    products: [],
-    cartBasePrice: 0,
-    cartTotalPrice: 0,
-    cartTotalDiscount: 0,
-    addProductsToCart: () => { },
-})
+export const CartContext = createContext<ICartContext>({} as ICartContext)
 
 const CartProvider = ({ children }: CartProviderProps) => {
     const [products, setProducts] = useState<CartProduct[]>([])
 
     const addProductsToCart = (product: CartProduct) => {
-
         const productIsAlreadyOnCart = products.findIndex(cartProduct => cartProduct.id === product.id)
-
         if (productIsAlreadyOnCart < 0) {
             setProducts(state => [...state, product])
         } else {
@@ -49,10 +42,32 @@ const CartProvider = ({ children }: CartProviderProps) => {
             }))
         }
     }
+
+    function changeCartProductQuantity(productId: string, type: 'increase' | 'decrease') {
+        const productIsAlreadyOnCart = products.findIndex(cartProduct => cartProduct.id === productId)
+
+        if(productIsAlreadyOnCart >= 0) {
+            setProducts(state => state.map(cartProduct => {
+                if (cartProduct.id === productId) {
+                    return {
+                        ...cartProduct,
+                        quantity: type === 'increase' ? cartProduct.quantity + 1 : cartProduct.quantity - 1
+                    }
+                }
+                return cartProduct
+            })
+            .filter(productCart => productCart.quantity > 0)
+            )
+        }
+    }
+
+
+
     return (
         <CartContext.Provider value={{
             products,
             addProductsToCart,
+            changeCartProductQuantity,
             cartBasePrice: 0,
             cartTotalPrice: 0,
             cartTotalDiscount: 0
