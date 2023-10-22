@@ -7,9 +7,19 @@ import { computeProductsTotalPrice } from "@/helpers/product"
 import { Separator } from "./separator"
 import { ScrollArea } from "./scroll-area"
 import { Button } from "./button"
+import { createCheckout } from "@/actions/checkout"
+import { loadStripe } from '@stripe/stripe-js'
 
 export const Cart = () => {
     const { products, total, subTotal, totalDiscount } = useContext(CartContext)
+
+    async function handleCheckoutClick() {
+        const response = await createCheckout(products)
+        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
+        stripe?.redirectToCheckout({
+            sessionId: response.id,
+        })
+    }
     return (
         <div className="flex flex-col gap-8 h-full">
             <Badge variant='outline' className="gap-1 w-fit text-sm border-2 border-primary uppercase px-3 py-[0.375rem]">
@@ -22,7 +32,7 @@ export const Cart = () => {
                     <div className="flex flex-col gap-8 h-full">
                         {products.length > 0 ? (
                             products.map(product => (
-                                <CartItem product={computeProductsTotalPrice(product as any) as any} />
+                                <CartItem key={product.id} product={computeProductsTotalPrice(product as any) as any} />
                             ))
                         ) : (
                             <p className="text-center font-semibold">
@@ -58,7 +68,7 @@ export const Cart = () => {
                         <p>R$ {total.toFixed(2)}</p>
                     </div>
 
-                    <Button className="uppercase font-bold mt-7">
+                    <Button onClick={handleCheckoutClick} className="uppercase font-bold mt-7">
                         Finalizar compra
                     </Button>
                 </div>
