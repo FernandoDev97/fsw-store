@@ -40,7 +40,9 @@ const CartProvider = ({ children }: CartProviderProps) => {
     )
 
     useEffect(() => {
-        localStorage.setItem(PRODUCTS_LOCAL_STORAGE, JSON.stringify(products))
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(PRODUCTS_LOCAL_STORAGE, JSON.stringify(products))
+        }
     }, [products])
 
     // Valor total sem descontos
