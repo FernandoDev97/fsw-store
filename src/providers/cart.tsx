@@ -1,7 +1,7 @@
 'use client'
 
 import { ProductWithTotalPrice } from "@/helpers/product";
-import { ReactNode, createContext, useMemo, useState } from "react";
+import { ReactNode, createContext, useDeferredValue, useEffect, useMemo, useState } from "react";
 
 export interface CartProduct extends ProductWithTotalPrice {
     quantity: number
@@ -25,10 +25,18 @@ interface CartProviderProps {
 
 }
 
+const LOCAL_SOTORAGE = "@fsw-store/cart-products"
+
 export const CartContext = createContext<ICartContext>({} as ICartContext)
 
 const CartProvider = ({ children }: CartProviderProps) => {
-    const [products, setProducts] = useState<CartProduct[]>([])
+    const [products, setProducts] = useState<CartProduct[]>(
+        JSON.parse(localStorage.getItem(LOCAL_SOTORAGE) || "[]")
+    )
+
+    useEffect(() => {
+        localStorage.setItem(LOCAL_SOTORAGE, JSON.stringify(products))
+    }, [products])
 
     // Valor total sem descontos
     const subTotal = useMemo(() => {
