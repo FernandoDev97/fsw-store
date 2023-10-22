@@ -31,18 +31,18 @@ export const CartContext = createContext<ICartContext>({} as ICartContext)
 
 const CartProvider = ({ children }: CartProviderProps) => {
     const [products, setProducts] = useState<CartProduct[]>(() => {
-        const storedCartItems = localStorage.getItem(PRODUCTS_LOCAL_STORAGE)
-        if (storedCartItems) {
-            return JSON.parse(storedCartItems)
+        if (typeof window !== 'undefined') {
+            const storedCartItems = localStorage.getItem(PRODUCTS_LOCAL_STORAGE)
+            if (storedCartItems) {
+                return JSON.parse(storedCartItems)
+            }
         }
         return [];
     }
     )
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            localStorage.setItem(PRODUCTS_LOCAL_STORAGE, JSON.stringify(products))
-        }
+        localStorage.setItem(PRODUCTS_LOCAL_STORAGE, JSON.stringify(products))
     }, [products])
 
     // Valor total sem descontos
@@ -70,7 +70,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
                 if (cartProduct.id === product.id) {
                     return {
                         ...cartProduct,
-                        quantity: product.quantity + cartProduct.quantity 
+                        quantity: product.quantity + cartProduct.quantity
                     }
                 }
                 return cartProduct
@@ -81,7 +81,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
     function changeCartProductQuantity(productId: string, type: 'increase' | 'decrease') {
         const productIsAlreadyOnCart = products.findIndex(cartProduct => cartProduct.id === productId)
 
-        if(productIsAlreadyOnCart >= 0) {
+        if (productIsAlreadyOnCart >= 0) {
             setProducts(state => state.map(cartProduct => {
                 if (cartProduct.id === productId) {
                     return {
@@ -91,7 +91,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
                 }
                 return cartProduct
             })
-            .filter(productCart => productCart.quantity > 0)
+                .filter(productCart => productCart.quantity > 0)
             )
         }
     }
