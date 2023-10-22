@@ -36,8 +36,8 @@ const CartProvider = ({ children }: CartProviderProps) => {
             if (storedCartItems) {
                 return JSON.parse(storedCartItems)
             }
-            return [];
         }
+        return [];
     }
     )
 
