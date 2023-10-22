@@ -25,17 +25,22 @@ interface CartProviderProps {
 
 }
 
-const LOCAL_SOTORAGE = "@fsw-store/cart-products"
+const PRODUCTS_LOCAL_STORAGE = "@fsw-store/cart-products"
 
 export const CartContext = createContext<ICartContext>({} as ICartContext)
 
 const CartProvider = ({ children }: CartProviderProps) => {
-    const [products, setProducts] = useState<CartProduct[]>(
-        JSON.parse(localStorage.getItem(LOCAL_SOTORAGE) || "[]")
+    const [products, setProducts] = useState<CartProduct[]>(() => {
+        const storedCartItems = localStorage.getItem(PRODUCTS_LOCAL_STORAGE)
+        if (storedCartItems) {
+            return JSON.parse(storedCartItems)
+        }
+        return [];
+    }
     )
 
     useEffect(() => {
-        localStorage.setItem(LOCAL_SOTORAGE, JSON.stringify(products))
+        localStorage.setItem(PRODUCTS_LOCAL_STORAGE, JSON.stringify(products))
     }, [products])
 
     // Valor total sem descontos
