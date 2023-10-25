@@ -11,8 +11,8 @@ interface ProductItemProps {
 export const ProductItem = ({ product }: ProductItemProps) => {
     return (
         <Link href={`/product/${product.slug}`}>
-            <div title={product.discountPercentage > 0 ? `De R$ ${Number(product.basePrice).toFixed(2)} por R$ ${product.totalPrice.toFixed(2)}` : `R$ ${Number(product.basePrice).toFixed(2)}`} className="flex flex-col max-w-[170px] gap gap-4 cursor-default">
-                <div className="bg-accent relative rounded-lg h-[170px] w-[170px] flex justify-center items-center">
+            <div title={product.discountPercentage > 0 ? `De R$ ${Number(product.basePrice).toFixed(2)} por R$ ${product.totalPrice.toFixed(2)}` : `R$ ${Number(product.basePrice).toFixed(2)}`} className="flex flex-col cursor-pointer max-w-[170px] md:w-full md:max-w-full gap-4 cursor-default">
+                <div className="bg-accent relative rounded-lg h-[170px] md:h-[220px] w-[170px] md:w-[280px] flex justify-center items-center">
                     <Image
                         src={product.imageUrls[0]}
                         width={0}

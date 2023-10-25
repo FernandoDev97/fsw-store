@@ -1,9 +1,9 @@
 import Image, { ImageProps } from 'next/image'
 
-export const PromoBanner = ({ src, alt }: ImageProps) => {
+export const PromoBanner = ({ src, alt, ...props}: ImageProps) => {
     return (
         <Image
-            className="h-auto w-full px-5"
+            {...props}
             src={src}
             width={0}
             height={0}
