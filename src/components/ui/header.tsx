@@ -3,13 +3,32 @@
 import React from 'react'
 import { Card } from './card'
 import { Button } from './button'
-import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PercentIcon, ShoppingCartIcon } from 'lucide-react'
+import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PercentIcon, ShoppingCartIcon, UserIcon } from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from './sheet'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from './avatar'
 import { Separator } from './separator'
 import Link from 'next/link'
 import { Cart } from './cart'
+import Image from 'next/image'
+
+const NAV_ITENS = [
+  {
+    id: 1,
+    label: 'Início',
+    href: '/',
+  },
+  {
+    id: 2,
+    label: 'Catálogo',
+    href: '/catalog',
+  },
+  {
+    id: 3,
+    label: 'Ofertas',
+    href: '/ofertas',
+  }
+]
 
 const handleLoginClick = async () => {
   await signIn("google")
@@ -23,9 +42,9 @@ const Header = () => {
   const { status, data } = useSession()
 
   return (
-    <Card className='flex items-center justify-between p-[1.875rem]'>
+    <Card className='flex items-center justify-between p-[1.875rem] px-4 lg:px-24'>
       <Sheet>
-        <SheetTrigger asChild>
+        <SheetTrigger className='md:hidden' asChild>
           <Button size='icon' variant='outline'>
             <MenuIcon />
           </Button>
@@ -92,19 +111,54 @@ const Header = () => {
       </Sheet>
 
       <Link href='/'>
-        <h1 className='font-semibold text-lg'><span className='text-primary'>FSW</span>Store</h1>
+        <Image
+          src='/logo-header.svg'
+          alt='Logo FSW Store'
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="max-h-[70%] w-auto object-contain max-w-[80%] h-auto"
+        />
       </Link>
 
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button size='icon' variant='outline'>
-            <ShoppingCartIcon />
-          </Button>
-        </SheetTrigger>
-        <SheetContent>
-          <Cart/>
-        </SheetContent>
-      </Sheet>
+      <nav className='hidden md:flex gap-12 font-semibold w-auto'>
+        {NAV_ITENS.map(item => (
+          <Link className='hover:text-violet-600 transition-all' key={item.id} href={item.href}>
+            {item.label}
+          </Link>
+        ))}
+      </nav>
+
+      <div className='flex items-center gap-8'>
+        <div className='hidden md:flex'>
+          {status === 'authenticated' && data?.user ? (
+            <Avatar className='w-8 h-8'>
+              <AvatarFallback>
+                {data.user.name?.[0].toUpperCase()}
+              </AvatarFallback>
+
+              {data.user.image && (
+                <AvatarImage src={data.user.image} />
+              )}
+            </Avatar>
+          ) : (
+            <UserIcon />
+          )}
+        </div>
+
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button size='icon' variant='outline'>
+              <ShoppingCartIcon />
+            </Button>
+          </SheetTrigger>
+          <SheetContent>
+            <Cart />
+          </SheetContent>
+        </Sheet>
+      </div>
+
+
     </Card>
   )
 }

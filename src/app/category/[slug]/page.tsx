@@ -3,11 +3,12 @@ import { ProductItem } from "@/components/ui/product-item"
 import { CATEGORY_ICON } from "@/contants/category-icons"
 import { computeProductsTotalPrice } from "@/helpers/product"
 import { prismaClient } from "@/lib/prisma"
+
 const CategoryProducts = async ({ params }: any) => {
 
   const category = await prismaClient.category.findFirst({
     where: {
-        slug: params.slug     
+      slug: params.slug
     },
     include: {
       Product: true

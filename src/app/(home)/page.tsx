@@ -5,6 +5,8 @@ import { SectionTitle } from "./components/section-title"
 import { PromoBanner } from "./components/promo-banner"
 
 export default async function Home() {
+
+
   const deals = await prismaClient.product.findMany({
     where: {
       discountPercentage: {
@@ -32,39 +34,69 @@ export default async function Home() {
   return (
     <div className="py-8">
       <PromoBanner
-        src="/Banner.png"
+        src='/Banner-desktop.png'
         alt="Até 55% de desconto este mês"
+        className="h-auto w-full px-5 md:px-0 hidden md:block"
       />
 
-      <div className="mt-8">
+      <PromoBanner
+        src='/Banner.png'
+        alt="Até 55% de desconto este mês"
+        className="h-auto w-full px-5 md:px-0 md:hidden"
+      />
+
+      <div className="mt-8 lg:px-16">
         <Categories />
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 lg:px-16">
         <SectionTitle>
           Ofertas
         </SectionTitle>
         <ProductList products={deals} />
       </div>
 
+      <div className="md:flex md:px-4 lg:px-20 mt-8 gap-10 hidden">
+        <PromoBanner
+          src='/banner-mouses.png'
+          alt="Até 20% de desconto em Fones"
+          className="h-auto w-full px-5 md:px-0"
+        />
+        <PromoBanner
+          src='/banner-fones.png'
+          alt="Até 20% de desconto em Fones"
+          className="h-auto w-full px-5 md:px-0"
+        />
+      </div>
+
       <PromoBanner
         src='/banner-mouses.png'
         alt="Até 55% de desconto em mouses"
+        className="h-auto w-full px-5 md:px-0 md:hidden"
       />
 
-      <div className="mt-8">
+      <div className="mt-8 lg:px-16">
         <SectionTitle>
           Teclados
         </SectionTitle>
         <ProductList products={keyboards} />
       </div>
 
+
       <PromoBanner
-        src='/banner-fones.png'
-        alt="Até 20% de desconto em Fones"
+        src='/banner-fretegratis.png'
+        alt="Até 55% de desconto este mês"
+        className="h-auto w-full px-5 md:px-4 lg:px-20 hidden md:block"
       />
 
-      <div className="mt-8">
+      <PromoBanner
+        src='/banner-fones.png'
+        alt="Até 55% de desconto este mês"
+        className="h-auto w-full px-5 md:px-0 md:hidden"
+      />
+
+
+      <div className="mt-8 lg:px-16">
         <SectionTitle>
           Mouses
         </SectionTitle>
