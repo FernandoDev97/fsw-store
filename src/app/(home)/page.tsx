@@ -45,63 +45,67 @@ export default async function Home() {
         className="h-auto w-full px-5 md:px-0 md:hidden"
       />
 
-      <div className="mt-8 lg:px-16">
-        <Categories />
-      </div>
 
-      <div className="mt-8 lg:px-16">
-        <SectionTitle>
-          Ofertas
-        </SectionTitle>
-        <ProductList products={deals} />
-      </div>
+      <div className="w-full max-w-[1366px] mx-auto px-5 md:px-0">
+        <div className="mt-8">
+          <Categories />
+        </div>
 
-      <div className="md:flex md:px-4 lg:px-20 mt-8 gap-10 hidden">
+        <div className="mt-8">
+          <SectionTitle>
+            Ofertas
+          </SectionTitle>
+          <ProductList products={deals} />
+        </div>
+
+        <div className="md:flex max-w-full mt-8 gap-10 hidden">
+          <PromoBanner
+            src='/banner-mouses.png'
+            alt="Até 20% de desconto em Fones"
+            className="h-auto w-full px-5 md:px-0"
+          />
+          <PromoBanner
+            src='/banner-fones.png'
+            alt="Até 20% de desconto em Fones"
+            className="h-auto w-full px-5 md:px-0"
+          />
+        </div>
+
         <PromoBanner
           src='/banner-mouses.png'
-          alt="Até 20% de desconto em Fones"
-          className="h-auto w-full px-5 md:px-0"
+          alt="Até 55% de desconto em mouses"
+          className="h-auto w-full md:px-0 md:hidden"
         />
+
+        <div className="mt-8">
+          <SectionTitle>
+            Teclados
+          </SectionTitle>
+          <ProductList products={keyboards} />
+        </div>
+
+
+        <PromoBanner
+          src='/banner-fretegratis.png'
+          alt="Até 55% de desconto este mês"
+          className="h-auto w-full hidden md:block"
+        />
+
         <PromoBanner
           src='/banner-fones.png'
-          alt="Até 20% de desconto em Fones"
-          className="h-auto w-full px-5 md:px-0"
+          alt="Até 55% de desconto este mês"
+          className="h-auto w-full md:px-0 md:hidden"
         />
+
+
+        <div className="mt-8">
+          <SectionTitle>
+            Mouses
+          </SectionTitle>
+          <ProductList products={mouses} />
+        </div>
       </div>
 
-      <PromoBanner
-        src='/banner-mouses.png'
-        alt="Até 55% de desconto em mouses"
-        className="h-auto w-full px-5 md:px-0 md:hidden"
-      />
-
-      <div className="mt-8 lg:px-16">
-        <SectionTitle>
-          Teclados
-        </SectionTitle>
-        <ProductList products={keyboards} />
-      </div>
-
-
-      <PromoBanner
-        src='/banner-fretegratis.png'
-        alt="Até 55% de desconto este mês"
-        className="h-auto w-full px-5 md:px-4 lg:px-20 hidden md:block"
-      />
-
-      <PromoBanner
-        src='/banner-fones.png'
-        alt="Até 55% de desconto este mês"
-        className="h-auto w-full px-5 md:px-0 md:hidden"
-      />
-
-
-      <div className="mt-8 lg:px-16">
-        <SectionTitle>
-          Mouses
-        </SectionTitle>
-        <ProductList products={mouses} />
-      </div>
     </div>
   )
 }
