@@ -42,7 +42,7 @@ const Header = () => {
   const { status, data } = useSession()
 
   return (
-    <Card className='flex items-center justify-between p-[1.875rem] px-4 lg:px-24'>
+    <Card className='flex items-center justify-between p-[1.875rem] px-4 w-full max-w-[1366px] mx-auto'>
       <Sheet>
         <SheetTrigger className='md:hidden' asChild>
           <Button size='icon' variant='outline'>
