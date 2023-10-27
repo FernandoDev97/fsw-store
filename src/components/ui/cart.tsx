@@ -9,11 +9,11 @@ import { ScrollArea } from "./scroll-area"
 import { Button } from "./button"
 import { createCheckout } from "@/actions/checkout"
 import { loadStripe } from '@stripe/stripe-js'
-import { useSession } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import { createOrder } from "@/actions/order"
 
 export const Cart = () => {
-    const { data } = useSession()
+    const { data, status } = useSession()
 
     const { products, total, subTotal, totalDiscount } = useContext(CartContext)
 
@@ -21,7 +21,7 @@ export const Cart = () => {
         if(!data?.user) {
             return
         }
-
+      
         await createOrder(products, (data?.user as any).id)
         const response = await createCheckout(products)
         const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
@@ -29,6 +29,11 @@ export const Cart = () => {
             sessionId: response.id,
         })
     }
+
+    async function handleAutheticated () {
+        await signIn("google")
+    }
+
     return (
         <div className="flex flex-col gap-8 h-full">
             <Badge variant='outline' className="gap-1 w-fit text-sm border-2 border-primary uppercase px-3 py-[0.375rem]">
@@ -77,7 +82,7 @@ export const Cart = () => {
                         <p>R$ {total.toFixed(2)}</p>
                     </div>
 
-                    <Button onClick={handleCheckoutClick} className="uppercase font-bold mt-7">
+                    <Button onClick={status === "unauthenticated" ? handleAutheticated : handleCheckoutClick} className="uppercase font-bold mt-7">
                         Finalizar compra
                     </Button>
                 </div>

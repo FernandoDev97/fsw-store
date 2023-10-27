@@ -31,12 +31,12 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     } 
 
     return (
-        <div className='flex flex-col px-5'>
+        <div className='flex flex-col mt-8 lg:mt-0 px-5 lg:w-full lg:max-w-[35%] lg:bg-accent rounded-lg lg:justify-center'>
             <h1 className='text-lg'>
                 {product.name}
             </h1>
 
-            <div className='flex items-center gap-1'>
+            <div className='flex items-center gap-1 lg:mt-2'>
                 <h2 className='text-xl font-bold'>R$ {product.totalPrice.toFixed(2)}</h2>
                 <Badge>
                     <ArrowDownIcon size={14} /> {product.discountPercentage}%
@@ -72,7 +72,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
                 Adicionar ao carrinho
             </Button>
 
-            <div className='bg-accent flex items-center mt-5 px-5 py-2 justify-between'>
+            <div className='bg-accent flex items-center mt-5 px-5 py-2 justify-between lg:bg-[#2a2a2a] lg:rounded-lg lg:mt-8'>
                 <div className='flex items-center gap-2'>
                     <TruckIcon/>
                     <div className='flex flex-col '>

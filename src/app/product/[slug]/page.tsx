@@ -35,7 +35,8 @@ const ProductDetailsPage = async ({ params: { slug } }: ProductDetailsPageProps)
     }
 
     return (
-        <div className="flex flex-col gap-8 pb-8">
+        <div className="flex flex-col gap-8 pb-8 w-full max-w-[1366px] mx-auto lg:mt-8">
+            <div className="flex flex-col lg:flex-row md:justify-between lg:gap-5">
             <ProductsImage
                 imageUrls={product.imageUrls}
                 name={product.name}
@@ -43,8 +44,10 @@ const ProductDetailsPage = async ({ params: { slug } }: ProductDetailsPageProps)
             <ProductInfo
                 product={computeProductsTotalPrice(product)}
             />
+            </div>
+           
             <div className="flex flex-col gap-3">
-                <h3 className="uppercase font-bold p-5">Produtos relacionados</h3>
+                <h3 className="uppercase font-bold p-5 lg:p-0 lg:text-lg lg:mt-8">Produtos relacionados</h3>
                 <ProductList products={product.category.Product} />
             </div>
         </div>

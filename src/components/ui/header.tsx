@@ -11,6 +11,7 @@ import { Separator } from './separator'
 import Link from 'next/link'
 import { Cart } from './cart'
 import Image from 'next/image'
+import { Popover, PopoverContent, PopoverTrigger } from './popover'
 
 const NAV_ITENS = [
   {
@@ -103,7 +104,7 @@ const Header = () => {
                 Ofertas
               </Button>
             </Link>
-            
+
             <Link href='/catalog'>
               <Button variant='outline' className='w-full justify-start gap-2'>
                 <ListOrderedIcon size={16} />
@@ -137,17 +138,39 @@ const Header = () => {
       <div className='flex items-center gap-8'>
         <div className='hidden md:flex'>
           {status === 'authenticated' && data?.user ? (
-            <Avatar className='w-8 h-8'>
-              <AvatarFallback>
-                {data.user.name?.[0].toUpperCase()}
-              </AvatarFallback>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Avatar className='w-8 h-8 cursor-pointer'>
+                  <AvatarFallback>
+                    {data.user.name?.[0].toUpperCase()}
+                  </AvatarFallback>
 
-              {data.user.image && (
-                <AvatarImage src={data.user.image} />
-              )}
-            </Avatar>
+                  {data.user.image && (
+                    <AvatarImage src={data.user.image} />
+                  )}
+                </Avatar>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-1 bg-accent">
+                <Button onClick={handleLogoutClick} variant='outline' className='w-full bg-accent justify-start gap-2'>
+                  <LogOutIcon size={16} />
+                  Fazer logout
+                </Button>
+              </PopoverContent>
+            </Popover>
+
           ) : (
-            <UserIcon />
+            <Popover>
+              <PopoverTrigger asChild>
+                <UserIcon className='cursor-pointer' />
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-1 bg-accent">
+                <Button onClick={handleLoginClick} variant='outline' className='w-full bg-accent justify-start gap-2'>
+                  <LogInIcon size={16} />
+                  Fazer login
+                </Button>
+              </PopoverContent>
+            </Popover>
+
           )}
         </div>
 
@@ -162,8 +185,6 @@ const Header = () => {
           </SheetContent>
         </Sheet>
       </div>
-
-
     </Card>
   )
 }
