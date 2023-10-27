@@ -15,8 +15,6 @@ import { createOrder } from "@/actions/order"
 export const Cart = () => {
     const { data, status } = useSession()
 
-    console.log(status)
-
     const { products, total, subTotal, totalDiscount } = useContext(CartContext)
 
     async function handleCheckoutClick() {
