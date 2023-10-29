@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useContext } from 'react'
 import { Card } from './card'
 import { Button } from './button'
 import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PercentIcon, ShoppingCartIcon, UserIcon } from 'lucide-react'
@@ -12,6 +12,8 @@ import Link from 'next/link'
 import { Cart } from './cart'
 import Image from 'next/image'
 import { Popover, PopoverContent, PopoverTrigger } from './popover'
+import { Badge } from './badge'
+import { CartContext } from '@/providers/cart'
 
 const NAV_ITENS = [
   {
@@ -41,6 +43,7 @@ const handleLogoutClick = async () => {
 
 const Header = () => {
   const { status, data } = useSession()
+  const { products } = useContext(CartContext)
 
   return (
     <Card className='flex items-center justify-between p-[1.875rem] px-4 w-full max-w-[1366px] mx-auto'>
@@ -176,7 +179,12 @@ const Header = () => {
 
         <Sheet>
           <SheetTrigger asChild>
-            <Button size='icon' variant='outline'>
+            <Button className='relative' size='icon' variant='outline'>
+              {products.length > 0 && (
+                <Badge className='absolute rounded-full top-[-5px] right-[-5px] w-[1.4rem] h-[1.4rem] flex justify-center items-center'>
+                  <span className='text-xs'>{products.length}</span>
+                </Badge>
+              )}
               <ShoppingCartIcon />
             </Button>
           </SheetTrigger>
