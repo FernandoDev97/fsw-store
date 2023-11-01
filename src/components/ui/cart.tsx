@@ -22,8 +22,8 @@ export const Cart = () => {
             return
         }
       
-        await createOrder(products, (data?.user as any).id)
-        const response = await createCheckout(products)
+        const { id } = await createOrder(products, (data?.user as any).id)
+        const response = await createCheckout(products, id)
         const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
         stripe?.redirectToCheckout({
             sessionId: response.id,
