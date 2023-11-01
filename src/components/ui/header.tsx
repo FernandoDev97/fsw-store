@@ -45,6 +45,10 @@ const Header = () => {
   const { status, data } = useSession()
   const { products } = useContext(CartContext)
 
+  if(!products) {
+    return
+  }
+
   return (
     <Card className='flex items-center justify-between p-[1.875rem] px-4 w-full max-w-[1366px] mx-auto'>
       <Sheet>
