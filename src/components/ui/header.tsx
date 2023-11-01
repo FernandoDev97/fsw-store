@@ -3,8 +3,8 @@
 import React, { useContext } from 'react'
 import { Card } from './card'
 import { Button } from './button'
-import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PercentIcon, ShoppingCartIcon, UserIcon } from 'lucide-react'
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from './sheet'
+import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PackageSearchIcon, PercentIcon, ShoppingCartIcon, UserIcon } from 'lucide-react'
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from './sheet'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from './avatar'
 import { Separator } from './separator'
@@ -15,37 +15,47 @@ import { Popover, PopoverContent, PopoverTrigger } from './popover'
 import { Badge } from './badge'
 import { CartContext } from '@/providers/cart'
 
-const NAV_ITENS = [
+const NAV_ITEMS = [
   {
     id: 1,
     label: 'Início',
     href: '/',
+    icon: <HomeIcon size={16} />
   },
   {
     id: 2,
     label: 'Catálogo',
     href: '/catalog',
+    icon: <PercentIcon size={16} />
   },
   {
     id: 3,
+    label: 'Meus Pedidos',
+    href: '/orders',
+    icon: <PackageSearchIcon size={16} />
+  },
+  {
+    id: 4,
     label: 'Ofertas',
     href: '/deals',
+    icon: <ListOrderedIcon size={16} />
   }
 ]
 
-const handleLoginClick = async () => {
-  await signIn("google")
-}
-
-const handleLogoutClick = async () => {
-  await signOut()
-}
 
 const Header = () => {
   const { status, data } = useSession()
   const { products } = useContext(CartContext)
 
-  if(!products) {
+  const handleLoginClick = async () => {
+    await signIn("google")
+  }
+  
+  const handleLogoutClick = async () => {
+    await signOut()
+  }
+
+  if (!products) {
     return
   }
 
@@ -98,27 +108,16 @@ const Header = () => {
               </Button>
             )}
 
-            <Link href='/'>
-              <Button variant='outline' className='w-full justify-start gap-2'>
-                <HomeIcon size={16} />
-                Início
-              </Button>
-            </Link>
-
-            <Link href='deals'>
-              <Button variant='outline' className='w-full justify-start gap-2'>
-                <PercentIcon size={16} />
-                Ofertas
-              </Button>
-            </Link>
-
-            <Link href='/catalog'>
-              <Button variant='outline' className='w-full justify-start gap-2'>
-                <ListOrderedIcon size={16} />
-                Catálogo
-              </Button>
-            </Link>
-
+            {NAV_ITEMS.map(item => (
+              <SheetClose key={item.id} asChild>
+                <Link href={item.href}>
+                  <Button variant='outline' className='w-full justify-start gap-2'>
+                    {item.icon}
+                    {item.label}
+                  </Button>
+                </Link>
+              </SheetClose>
+            ))}
           </div>
         </SheetContent>
       </Sheet>
@@ -135,7 +134,7 @@ const Header = () => {
       </Link>
 
       <nav className='hidden md:flex gap-12 font-semibold w-auto'>
-        {NAV_ITENS.map(item => (
+        {NAV_ITEMS.map(item => (
           <Link className='hover:text-violet-600 transition-all' key={item.id} href={item.href}>
             {item.label}
           </Link>
