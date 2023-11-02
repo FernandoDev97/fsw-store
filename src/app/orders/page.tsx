@@ -30,9 +30,11 @@ const OrdersPage = async () => {
         Meus Pedidos
       </Badge>
 
+      <div className="flex flex-col gap-5 mt-8">
       {orders.map(order => (
-        <OrderItem order={order}/>
+        <OrderItem key={order.id} order={order}/>
       ))}
+      </div>
     </div>
   )
 }
