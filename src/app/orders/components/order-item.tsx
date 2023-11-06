@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card"
 import { Prisma } from "@prisma/client"
 import { format } from 'date-fns'
 import { OrderProductItem } from "./order-product-item"
+import { computeProductsTotalPrice } from "@/helpers/product"
 
 interface OrderItemProps {
     order: Prisma.OrderGetPayload<{
@@ -48,9 +49,8 @@ export const OrderItem = ({ order }: OrderItemProps) => {
                                     <p className="opacity-60">Cartão</p>
                                 </div>
                             </div>
-
                             {order.orderProducts.map(orderProduct => (
-                                <OrderProductItem key={orderProduct.id} orderProduct={orderProduct}/>
+                                <OrderProductItem key={orderProduct.id} orderProduct={computeProductsTotalPrice(orderProduct as any) as any }/>
                             ))}
                         </div>
                     </AccordionContent>
