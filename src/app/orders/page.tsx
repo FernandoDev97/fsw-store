@@ -38,7 +38,7 @@ const OrdersPage = async () => {
 
       <div className="flex flex-col gap-5 mt-8">
         {
-          orders.length < 0 ? (
+          orders.length > 0 ? (
             orders.map(order => (
               <OrderItem key={order.id} order={order} />
             ))
