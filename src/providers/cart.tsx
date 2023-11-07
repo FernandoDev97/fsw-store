@@ -18,6 +18,7 @@ interface ICartContext {
     addProductsToCart: (product: CartProduct) => void
     changeCartProductQuantity: (productId: string, type: 'increase' | 'decrease') => void
     removeProductCart: (pruduct: string) => void
+    cleanCart: () => void
 }
 
 interface CartProviderProps {
@@ -100,12 +101,17 @@ const CartProvider = ({ children }: CartProviderProps) => {
         setProducts(state => state.filter(cartProduct => cartProduct.id !== productId))
     }
 
+    function cleanCart() {
+        setProducts([])
+    }
+
     return (
         <CartContext.Provider value={{
             products,
             addProductsToCart,
             changeCartProductQuantity,
             removeProductCart,
+            cleanCart,
             subTotal,
             total,
             totalDiscount,
