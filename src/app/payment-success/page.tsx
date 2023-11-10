@@ -2,6 +2,7 @@ import { authOptions } from "@/lib/auth"
 import { CartContext } from "@/providers/cart"
 import { CheckIcon } from "lucide-react"
 import { getServerSession } from "next-auth"
+import Image from "next/image"
 import { redirect } from "next/navigation"
 import { useContext, useEffect } from "react"
 import Stripe from "stripe"
@@ -20,7 +21,6 @@ export default async function PaymentSuccess({
   if(!session) {
     redirect('/')
   }
-
   const sessionId = String(searchParams.session_id)
 
   const response = await stripe.checkout.sessions.retrieve(sessionId, {
@@ -33,8 +33,18 @@ export default async function PaymentSuccess({
     return product.images[0]
   })
 
-  console.log(productsImages)
-
-
-  return <h1>{searchParams.session_id}</h1>
+  return (
+    <div className="grid grid-cols-2 items-stretch w-full gap-4 max-w-[1366px] mx-auto">
+      <div className="w-full max-w-[700px] bg-red-300 rounded-full flex justify-center items-center">
+        {productsImages && productsImages?.map(productImage => (
+          <Image
+            src={productImage}
+            width={120} 
+            height={110}
+            alt={productImage}
+          />
+        ))}
+      </div>
+    </div>
+  )
 }
