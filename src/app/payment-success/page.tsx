@@ -1,10 +1,5 @@
-import { authOptions } from "@/lib/auth"
-import { CartContext } from "@/providers/cart"
-import { CheckIcon } from "lucide-react"
-import { getServerSession } from "next-auth"
 import Image from "next/image"
 import { redirect } from "next/navigation"
-import { useContext, useEffect } from "react"
 import Stripe from "stripe"
 
 export default async function PaymentSuccess({
@@ -34,21 +29,22 @@ export default async function PaymentSuccess({
   })
 
   return (
-    <div className="grid grid-cols-2 items-stretch w-full gap-4 max-w-[1366px] mx-auto">
-      {productsImages && productsImages?.map(productImage => (
-        <div key={productImage} className="bg-red-300 rounded-full flex justify-center items-center">
+    <div className="flex flex-col gap-12 w-full max-w-[1366px] mx-auto h-full items-center justify-center">
+      <div className="flex gap-6 justify-center ">
+        {productsImages?.map(productImage => (
           <Image
+            key={productImage}
             src={productImage}
-            width={120}
-            height={110}
+            width={130}
+            height={120}
             alt={productImage}
+            className="bg-accent rounded-full"
           />
-        </div>
-      ))}
-
-      <p>
-        Uhuuul <strong>{customerName}</strong>, sua compra de <strong>{productsImages?.length}</strong>
-        {productsImages?.length === 1 ? ' camiseta' : ' camisetas'} já esta a caminho da sua casa.
+        ))}
+      </div>
+      <p className="text-2xl max-w-2xl text-center leading-10 text-">
+        Uhuuul <strong className="font-semibold uppercase">{customerName}</strong>, sua compra de <strong>{productsImages?.length}</strong>
+        {productsImages?.length === 1 ? ' produto' : ' produtos'} na <strong>FSW Store</strong> já esta a caminho da sua casa.
       </p>
     </div>
   )
