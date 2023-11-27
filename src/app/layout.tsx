@@ -20,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="pt-BR">
+      <body suppressHydrationWarning={false} className={inter.className}>
         <div className='flex h-full flex-col'>
           <AuthProvider>
             <CartProvider>

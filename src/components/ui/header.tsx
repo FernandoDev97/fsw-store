@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Card } from './card'
 import { Button } from './button'
 import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PackageSearchIcon, PercentIcon, ShoppingCartIcon, UserIcon } from 'lucide-react'
@@ -46,6 +46,11 @@ const NAV_ITEMS = [
 const Header = () => {
   const { status, data } = useSession()
   const { products } = useContext(CartContext)
+  const [firstRender, setFirstRender] = useState(false);
+
+  useEffect(()=>{
+    setFirstRender(true);
+  },[]);
 
   const handleLoginClick = async () => {
     await signIn("google")
@@ -53,10 +58,6 @@ const Header = () => {
   
   const handleLogoutClick = async () => {
     await signOut()
-  }
-
-  if (!products) {
-    return
   }
 
   return (
@@ -183,7 +184,7 @@ const Header = () => {
         <Sheet>
           <SheetTrigger asChild>
             <Button className='relative' size='icon' variant='outline'>
-              {products.length > 0 && (
+              {products.length > 0 && firstRender && (
                 <Badge className='absolute rounded-full top-[-5px] right-[-5px] w-[1.4rem] h-[1.4rem] flex justify-center items-center'>
                   <span className='text-xs'>{products.length}</span>
                 </Badge>
